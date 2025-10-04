@@ -1,17 +1,18 @@
 import { provideZonelessChangeDetection } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { AppComponent } from './app.component';
+import { LanguageSelectorComponent } from './language-selector.component';
 
-describe('App', () => {
+
+describe('LanguageSelectorComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AppComponent],
+      imports: [LanguageSelectorComponent],
       providers: [provideZonelessChangeDetection()]
     }).compileComponents();
   });
 
-  it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
+  it('should create the language selection component', () => {
+    const fixture = TestBed.createComponent(LanguageSelectorComponent);
     const app = fixture.componentInstance;
     expect(app).toBeTruthy();
   });

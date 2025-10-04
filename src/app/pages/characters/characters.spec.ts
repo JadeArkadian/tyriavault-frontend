@@ -1,17 +1,18 @@
 import { provideZonelessChangeDetection } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { AppComponent } from './app.component';
+import { CharactersComponent } from './characters.component';
 
-describe('App', () => {
+
+describe('CharactersComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AppComponent],
+      imports: [CharactersComponent],
       providers: [provideZonelessChangeDetection()]
     }).compileComponents();
   });
 
-  it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
+  it('should create the characters page', () => {
+    const fixture = TestBed.createComponent(CharactersComponent);
     const app = fixture.componentInstance;
     expect(app).toBeTruthy();
   });
