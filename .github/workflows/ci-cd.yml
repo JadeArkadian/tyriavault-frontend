@@ -31,7 +31,7 @@ jobs:
 
       - name: 🧪 Run tests
         run: |
-          pnpm run test --watch=false --browsers=ChromeHeadless --no-progress
+          pnpm run test
         continue-on-error: true
 
   package:
@@ -42,16 +42,17 @@ jobs:
       - name: 🧭 Checkout repository
         uses: actions/checkout@v5
 
-      - name: ⚙️ Setup Node.js 22
-        uses: actions/setup-node@v5
-        with:
-          node-version: 22
-
       - name: 📦 Setup PNPM
         uses: pnpm/action-setup@v4
         with:
           version: 10
           run_install: true
+
+      - name: ⚙️ Setup Node.js 22
+        uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: "pnpm"
 
       - name: 🧱 Build Angular app
         run: pnpm run build
