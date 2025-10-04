@@ -1,6 +1,20 @@
 <div class="flex gap-2 text-xs font-semibold">
-  <button class="hover:underline" (click)="setLanguage('en')">EN</button>
-  <button class="hover:underline" (click)="setLanguage('es')">ES</button>
-  <button class="hover:underline" (click)="setLanguage('fr')">FR</button>
-  <button class="hover:underline" (click)="setLanguage('de')">DE</button>
+  <button type="button" (click)="setLanguage('en')"
+    class="flex items-center justify-center p-1 rounded-full bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
+    <img src="language/flag-en.svg" alt="EN" class="w-4 h-4 text-white">
+  </button>
+  <button type="button" (click)="setLanguage('es')"
+    class="flex items-center justify-center p-1 rounded-full bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
+    <img src="language/flag-es.svg" alt="ES" class="w-4 h-4 text-white">
+  </button>
+
+  <button type="button" (click)="setLanguage('fr')"
+    class="flex items-center justify-center p-1 rounded-full bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
+    <img src="language/flag-fr.svg" alt="FR" class="w-4 h-4 text-white">
+  </button>
+
+  <button type="button" (click)="setLanguage('de')"
+    class="flex items-center justify-center p-1 rounded-full bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
+    <img src="language/flag-de.svg" alt="DE" class="w-4 h-4 text-white">
+  </button>
 </div>

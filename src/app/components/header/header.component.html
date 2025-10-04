@@ -1,17 +1,20 @@
-<header
-  class="bg-indigo-600 text-white flex flex-wrap items-center justify-between px-6 py-3 shadow-md"
->
-  <!-- Izquierda: selector de idioma -->
+<header class="bg-indigo-600 text-white flex flex-wrap items-center justify-between px-6 py-3 shadow-md">
   <div class="flex items-center gap-2">
     <app-language-selector></app-language-selector>
   </div>
 
-  <!-- Centro: barra de navegación -->
   <nav class="flex flex-wrap gap-6 text-sm font-semibold">
-    <button (click)="navigate('/')" class="hover:underline">Home</button>
-    <button (click)="navigate('/account')" class="hover:underline">Account</button>
-    <button (click)="navigate('/characters')" class="hover:underline">Characters</button>
-    <button (click)="navigate('/tradingpost')" class="hover:underline">Tradingpost</button>
-    <button (click)="navigate('/analytics')" class="hover:underline">Analytics</button>
+    <button type="button" (click)="navigate('/')" class="text-gray-900 dark:text-gray-100 hover:text-red-600 dark:hover:text-red-400">Home</button>
+    <button type="button" (click)="navigate('/account')" class="text-gray-900 dark:text-gray-100 hover:text-red-600 dark:hover:text-red-400">Account</button>
+    <button type="button" (click)="navigate('/characters')" class="text-gray-900 dark:text-gray-100 hover:text-red-600 dark:hover:text-red-400">Characters</button>
+    <button type="button" (click)="navigate('/tradingpost')" class="text-gray-900 dark:text-gray-100 hover:text-red-600 dark:hover:text-red-400">Tradingpost</button>
+    <button type="button" (click)="navigate('/analytics')" class="text-gray-900 dark:text-gray-100 hover:text-red-600 dark:hover:text-red-400">Analytics</button>
   </nav>
+
+  <div>
+  <a class="text-sm font-semibold text-gray-900 dark:text-gray-100 hover:text-red-600 dark:hover:text-red-400">
+    API Key Setup
+    <span aria-hidden="">→</span>
+  </a>
+</div>
 </header>
