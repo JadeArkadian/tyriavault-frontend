@@ -1,0 +1,17 @@
+<header
+  class="bg-indigo-600 text-white flex flex-wrap items-center justify-between px-6 py-3 shadow-md"
+>
+  <!-- Izquierda: selector de idioma -->
+  <div class="flex items-center gap-2">
+    <app-language-selector></app-language-selector>
+  </div>
+
+  <!-- Centro: barra de navegación -->
+  <nav class="flex flex-wrap gap-6 text-sm font-semibold">
+    <button (click)="navigate('/')" class="hover:underline">Home</button>
+    <button (click)="navigate('/account')" class="hover:underline">Account</button>
+    <button (click)="navigate('/characters')" class="hover:underline">Characters</button>
+    <button (click)="navigate('/tradingpost')" class="hover:underline">Tradingpost</button>
+    <button (click)="navigate('/analytics')" class="hover:underline">Analytics</button>
+  </nav>
+</header>

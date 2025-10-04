@@ -1,17 +1,18 @@
 import { provideZonelessChangeDetection } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { AppComponent } from './app.component';
+import { GameaccountComponent } from './gameaccount.component';
 
-describe('App', () => {
+
+describe('GameaccountComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AppComponent],
+      imports: [GameaccountComponent],
       providers: [provideZonelessChangeDetection()]
     }).compileComponents();
   });
 
-  it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
+  it('should create the gameaccount page', () => {
+    const fixture = TestBed.createComponent(GameaccountComponent);
     const app = fixture.componentInstance;
     expect(app).toBeTruthy();
   });
