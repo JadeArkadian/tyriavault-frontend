@@ -3,5 +3,48 @@
         "angular-*": {
             "externalTemplate": true
         }
+    },
+    "piny.project_settings": {
+        "open-pages": [
+            "pinyfakepage.html"
+        ],
+        "tw-external-config": {},
+        "source-folders": null,
+        "preview-url": "http://localhost:4200",
+        "ai-project-brief": null,
+        "recent-classes": [
+            "r",
+            "w",
+            "o",
+            "x",
+            "l",
+            "f",
+            "d",
+            "n",
+            "s",
+            "m",
+            "e",
+            "t",
+            "i",
+            "3",
+            "1",
+            "y",
+            "6",
+            "5",
+            "-",
+            "p",
+            "a",
+            "g"
+        ],
+        "urls": {
+            "pinyfakepage.html": {
+                "open-page-views": [
+                    {
+                        "w": 835,
+                        "h": 0
+                    }
+                ]
+            }
+        }
     }
 }

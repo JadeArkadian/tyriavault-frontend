@@ -1,10 +1,11 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { LanguageSelectorComponent } from '../language-selector/language-selector.component';
 import { Router } from '@angular/router';
+import { TranslocoDirective } from '@jsverse/transloco';
+import { LanguageSelectorComponent } from '../language-selector/language-selector.component';
 
 @Component({
   selector: 'app-header',
-  imports: [LanguageSelectorComponent],
+  imports: [LanguageSelectorComponent, TranslocoDirective],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css',
   changeDetection: ChangeDetectionStrategy.Default,
