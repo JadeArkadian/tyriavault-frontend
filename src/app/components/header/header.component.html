@@ -3,12 +3,12 @@
     <app-language-selector></app-language-selector>
   </div>
 
-  <nav class="flex flex-wrap gap-6 text-sm font-semibold">
-    <button type="button" (click)="navigate('/')" class="text-gray-900 dark:text-gray-100 hover:text-red-600 dark:hover:text-red-400">Home</button>
-    <button type="button" (click)="navigate('/account')" class="text-gray-900 dark:text-gray-100 hover:text-red-600 dark:hover:text-red-400">Account</button>
-    <button type="button" (click)="navigate('/characters')" class="text-gray-900 dark:text-gray-100 hover:text-red-600 dark:hover:text-red-400">Characters</button>
-    <button type="button" (click)="navigate('/tradingpost')" class="text-gray-900 dark:text-gray-100 hover:text-red-600 dark:hover:text-red-400">Tradingpost</button>
-    <button type="button" (click)="navigate('/analytics')" class="text-gray-900 dark:text-gray-100 hover:text-red-600 dark:hover:text-red-400">Analytics</button>
+  <nav *transloco="let t" class="flex flex-wrap gap-6 text-sm font-semibold">
+    <button type="button" (click)="navigate('/')" class="text-gray-900 dark:text-gray-100 hover:text-red-600 dark:hover:text-red-400">{{ t('header.home') }}</button>
+    <button type="button" (click)="navigate('/account')" class="text-gray-900 dark:text-gray-100 hover:text-red-600 dark:hover:text-red-400">{{ t('header.account') }}</button>
+    <button type="button" (click)="navigate('/characters')" class="text-gray-900 dark:text-gray-100 hover:text-red-600 dark:hover:text-red-400">{{ t('header.characters') }}</button>
+    <button type="button" (click)="navigate('/tradingpost')" class="text-gray-900 dark:text-gray-100 hover:text-red-600 dark:hover:text-red-400">{{ t('header.tradingpost') }}</button>
+    <button type="button" (click)="navigate('/analytics')" class="text-gray-900 dark:text-gray-100 hover:text-red-600 dark:hover:text-red-400">{{ t('header.analytics') }}</button>
   </nav>
 
   <div>

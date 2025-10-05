@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-language-selector',
@@ -6,10 +7,17 @@ import { Component } from '@angular/core';
   templateUrl: './language-selector.component.html',
 })
 export class LanguageSelectorComponent {
-  currentLang = 'es';
+  
+  private transloco = inject(TranslocoService);
 
-  setLanguage(lang: string) {
-    this.currentLang = lang;
-    console.log(`Idioma cambiado a: ${lang}`);
+  changeLang(event:any) {
+    const target = event.target as HTMLSelectElement;
+    const langCode = target.value;
+
+    console.debug(langCode);
+    
+    if (langCode != null) {
+      this.transloco.setActiveLang(langCode);   
+    }
   }
 }

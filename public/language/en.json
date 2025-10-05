@@ -1,0 +1,21 @@
+{
+  "header": {
+    "home": "Home",
+    "account": "Account",
+    "characters": "Characters",
+    "tradingpost": "Tradingpost",
+    "analytics": "Analytics"
+  },
+  "footer": {
+    "licensedby": "This project is licensed under the",
+    "mit":"MIT license",
+    "codedby":"Coded by Jade Arkadian."
+  },
+  "titles": {
+    "home": "TyriaVault - Home",
+    "account": "TyriaVault - Account",
+    "characters": "TyriaVault - Characters",
+    "tradingpost": "TyriaVault - Tradingpost",
+    "analytics": "TyriaVault - Analytics"
+  }
+}

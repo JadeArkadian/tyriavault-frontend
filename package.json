@@ -30,6 +30,8 @@
     "@angular/forms": "^20.3.0",
     "@angular/platform-browser": "^20.3.0",
     "@angular/router": "^20.3.0",
+    "@jsverse/transloco": "^8.0.2",
+    "@jsverse/transloco-utils": "8.0.2",
     "@tailwindcss/postcss": "^4.1.14",
     "postcss": "^8.5.6",
     "rxjs": "~7.8.0",
