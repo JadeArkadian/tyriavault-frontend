@@ -1,5 +1,9 @@
-@media (max-width: 768px) {
-  nav {
-    display: none;
-  }
-}
+      /* Ensures the whole app takes up the screen height for theme consistency */
+      :host {
+        display: block;
+        min-height: 100vh;
+      }
+      /* Ensure body/html respects the theme, although Tailwind's utility classes handle most of this */
+      .dark {
+        background-color: #0d1117; /* Dark background */
+      }

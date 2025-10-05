@@ -1,10 +1,10 @@
 import { Component, signal } from '@angular/core';
-import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, NavigationEnd, Router, RouterOutlet } from '@angular/router';
-import { TranslocoService } from '@jsverse/transloco';
 import { filter, map, mergeMap } from 'rxjs/operators';
 import { FooterComponent } from './components/footer/footer.component';
 import { HeaderComponent } from './components/header/header.component';
+import { Title } from '@angular/platform-browser';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-root',
