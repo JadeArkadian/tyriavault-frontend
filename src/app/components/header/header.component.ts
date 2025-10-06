@@ -1,8 +1,6 @@
 import {ChangeDetectionStrategy, Component, signal, inject} from '@angular/core';
 import {ThemeToggleComponent} from '../theme-toggle/theme-toggle.component';
 import {DesktopLanguageSelectorComponent} from '../language-selector/desktop/desktop-language-selector.component';
-import {MobileLanguageSelectorComponent} from '../language-selector/mobile/mobile-language-selector.component';
-import {TranslocoPipe} from '@jsverse/transloco';
 import {Router} from '@angular/router';
 import {DesktopNavigationComponent} from '../navigation/desktop/desktop-navigation.component';
 import {NavItem} from '../../interfaces/nav-item';
