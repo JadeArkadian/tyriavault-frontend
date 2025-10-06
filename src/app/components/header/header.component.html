@@ -18,65 +18,22 @@
       </div>
 
       <!-- Desktop Navigation -->
-      <nav class="hidden md:flex md:space-x-4 lg:space-x-8 items-center">
-
-        @for (item of navItems; track item) {
-          @if (!item.subItems) {
-            <button
-              (click)="selectPage(item.id, item.path)"
-              [class]="isCurrentPage(item.id)
-                ? 'text-indigo-600 dark:text-indigo-400 border-b-2 border-indigo-500 font-semibold'
-                : 'text-gray-600 hover:text-indigo-600 dark:text-gray-300 dark:hover:text-indigo-400'"
-              class="px-3 py-2 text-sm font-medium rounded-md transition-colors duration-200">
-              {{ item.label | transloco }}
-            </button>
-          }
-
-          @if (item.subItems) {
-            <div class="relative group">
-              <button
-                (click)="toggleAccountDropdown()"
-                (blur)="closeAccountDropdown()"
-                class="flex items-center px-3 py-2 text-sm font-medium rounded-md transition-colors duration-200"
-                [class]="isAccountActive()
-                  ? 'text-indigo-600 dark:text-indigo-400 border-b-2 border-indigo-500 font-semibold'
-                  : 'text-gray-600 hover:text-indigo-600 dark:text-gray-300 dark:hover:text-indigo-400'">
-                {{ item.label | transloco }}
-                <svg class="ml-1 h-5 w-5 transition-transform duration-200"
-                     [class.rotate-180]="isAccountDropdownOpen()"
-                     xmlns="http://www.w3.org/2000/svg"
-                     viewBox="0 0 20 20" fill="currentColor">
-                  <path fill-rule="evenodd"
-                        d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.25 4.25a.75.75 0 01-1.06 0L5.21 8.27a.75.75 0 01.02-1.06z"
-                        clip-rule="evenodd"/>
-                </svg>
-              </button>
-
-              @if (isAccountDropdownOpen()) {
-                <div
-                  class="absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white dark:bg-gray-700 ring-1 ring-black ring-opacity-5 focus:outline-none">
-                  @for (subItem of item.subItems; track subItem) {
-                    <button
-                      (click)="selectPage(subItem.id, subItem.path)"
-                      class="block px-4 py-2 text-sm w-full text-left transition-colors duration-150"
-                      [class]="isCurrentPage(subItem.id)
-                        ? 'bg-indigo-50 dark:bg-indigo-900/50 text-indigo-600 dark:text-indigo-400 font-medium'
-                        : 'text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600'">
-                      {{ subItem.label | transloco }}
-                    </button>
-                  }
-                </div>
-              }
-            </div>
-          }
-        }
-      </nav>
+      <app-desktop-navigation
+        [navItems]="navItems"
+        [currentPage]="currentPage()"
+        [isAccountDropdownOpen]="isAccountDropdownOpen()"
+        [selectPage]="selectPage.bind(this)"
+        [toggleAccountDropdown]="toggleAccountDropdown.bind(this)"
+        [closeAccountDropdown]="closeAccountDropdown.bind(this)"
+        [isCurrentPage]="isCurrentPage.bind(this)"
+        [isAccountActive]="isAccountActive.bind(this)">
+      </app-desktop-navigation>
 
       <!-- Controls -->
       <div class="flex items-center space-x-4">
 
         <!-- Language -->
-        <app-language-selector></app-language-selector>
+        <app-desktop-language-selector></app-desktop-language-selector>
 
         <!-- Theme toggle -->
         <app-theme-toggle></app-theme-toggle>
@@ -111,62 +68,15 @@
   </div>
 
   <!-- Mobile Menu -->
-  @if (isMenuOpen()) {
-    <div class="md:hidden transition-all duration-300 ease-in-out" id="mobile-menu">
-      <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-
-        @for (item of navItems; track item) {
-          @if (!item.subItems) {
-            <button
-              (click)="selectPage(item.id, item.path); toggleMobileMenu()"
-              [class]="isCurrentPage(item.id)
-                ? 'bg-indigo-50 dark:bg-indigo-700/50 text-indigo-700 dark:text-indigo-300 font-semibold'
-                : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'"
-              class="block w-full text-left px-3 py-2 rounded-md text-base font-medium transition-colors">
-              {{ item.label | transloco }}
-            </button>
-          }
-
-          @if (item.subItems) {
-            <div class="space-y-1">
-              <button
-                (click)="toggleMobileAccountDropdown()"
-                class="flex justify-between items-center w-full px-3 py-2 rounded-md text-base font-medium transition-colors"
-                [class]="isAccountActive()
-                  ? 'bg-indigo-50 dark:bg-indigo-700/50 text-indigo-700 dark:text-indigo-300 font-semibold'
-                  : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'">
-                <span>{{ item.label | transloco }}</span>
-                <svg class="ml-1 h-5 w-5 transition-transform duration-200"
-                     [class.rotate-180]="isMobileAccountDropdownOpen()"
-                     xmlns="http://www.w3.org/2000/svg"
-                     viewBox="0 0 20 20" fill="currentColor">
-                  <path fill-rule="evenodd"
-                        d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.25 4.25a.75.75 0 01-1.06 0L5.21 8.27a.75.75 0 01.02-1.06z"
-                        clip-rule="evenodd"/>
-                </svg>
-              </button>
-
-              @if (isMobileAccountDropdownOpen()) {
-                <div class="pl-4 border-l border-indigo-500/50 space-y-1">
-                  @for (subItem of item.subItems; track subItem) {
-                    <button
-                      (click)="selectPage(subItem.id, subItem.path); toggleMobileMenu()"
-                      class="block w-full text-left px-3 py-2 rounded-md text-sm font-medium transition-colors"
-                      [class]="isCurrentPage(subItem.id)
-                        ? 'bg-indigo-100 dark:bg-indigo-800/50 text-indigo-700 dark:text-indigo-200 font-medium'
-                        : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700'">
-                      {{ subItem.label | transloco }}
-                    </button>
-                  }
-                </div>
-              }
-            </div>
-          }
-        }
-
-        <!-- Mobile language -->
-        <app-mobile-language-selector></app-mobile-language-selector>
-      </div>
-    </div>
-  }
+  <app-mobile-navigation
+    [navItems]="navItems"
+    [isMenuOpen]="isMenuOpen()"
+    [isMobileAccountDropdownOpen]="isMobileAccountDropdownOpen()"
+    [currentPage]="currentPage()"
+    [selectPage]="selectPage.bind(this)"
+    [toggleMobileMenu]="toggleMobileMenu.bind(this)"
+    [toggleMobileAccountDropdown]="toggleMobileAccountDropdown.bind(this)"
+    [isCurrentPage]="isCurrentPage.bind(this)"
+    [isAccountActive]="isAccountActive.bind(this)">
+  </app-mobile-navigation>
 </header>

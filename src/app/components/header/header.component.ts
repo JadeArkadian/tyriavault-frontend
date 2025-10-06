@@ -1,22 +1,18 @@
 import {ChangeDetectionStrategy, Component, signal, inject} from '@angular/core';
 import {ThemeToggleComponent} from '../theme-toggle/theme-toggle.component';
-import {LanguageSelectorComponent} from '../language-selector/desktop/language-selector.component';
+import {DesktopLanguageSelectorComponent} from '../language-selector/desktop/desktop-language-selector.component';
 import {MobileLanguageSelectorComponent} from '../language-selector/mobile/mobile-language-selector.component';
 import {TranslocoPipe} from '@jsverse/transloco';
 import {Router} from '@angular/router';
+import {DesktopNavigationComponent} from '../navigation/desktop/desktop-navigation.component';
+import {NavItem} from '../../interfaces/nav-item';
+import {MobileNavigationComponent} from '../navigation/mobile/mobile-navigation.component';
 
-// Define the structure for a navigation item
-interface NavItem {
-  id: string;
-  label: string;
-  path: string;
-  subItems?: NavItem[];
-}
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [ThemeToggleComponent, LanguageSelectorComponent, MobileLanguageSelectorComponent, TranslocoPipe],
+  imports: [ThemeToggleComponent, DesktopLanguageSelectorComponent, DesktopNavigationComponent, MobileNavigationComponent],
   templateUrl: './header.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

@@ -2,12 +2,12 @@ import {Component, inject, signal} from '@angular/core';
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-language-selector',
+  selector: 'app-desktop-language-selector',
   standalone: true,
-  templateUrl: './language-selector.component.html',
-  styleUrls: ['./language-selector.component.css']
+  templateUrl: './desktop-language-selector.component.html',
+  styleUrls: ['./desktop-language-selector.component.css']
 })
-export class LanguageSelectorComponent {
+export class DesktopLanguageSelectorComponent {
 
   private readonly translocoService = inject(TranslocoService);
 
