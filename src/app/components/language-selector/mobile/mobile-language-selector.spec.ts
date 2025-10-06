@@ -1,12 +1,13 @@
 import { provideZonelessChangeDetection } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { MobileLanguageSelectorComponent } from './mobile-language-selector.component';
+import { TranslocoTestingModule } from '@jsverse/transloco';
 
 
 describe('MobileLanguageSelectorComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [MobileLanguageSelectorComponent],
+      imports: [MobileLanguageSelectorComponent,TranslocoTestingModule.forRoot({preloadLangs: true})],
       providers: [provideZonelessChangeDetection()]
     }).compileComponents();
   });

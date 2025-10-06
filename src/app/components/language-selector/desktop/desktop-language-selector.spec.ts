@@ -1,12 +1,13 @@
 import { provideZonelessChangeDetection } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { DesktopLanguageSelectorComponent } from './desktop-language-selector.component';
+import { TranslocoTestingModule } from '@jsverse/transloco';
 
 
 describe('DesktopLanguageSelectorComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [DesktopLanguageSelectorComponent],
+      imports: [DesktopLanguageSelectorComponent, TranslocoTestingModule.forRoot({preloadLangs: true})],
       providers: [provideZonelessChangeDetection()]
     }).compileComponents();
   });
