@@ -1,20 +1,172 @@
-<header class="bg-indigo-600 text-white flex flex-wrap items-center justify-between px-6 py-3 shadow-md">
-  <div class="flex items-center gap-2">
-    <app-language-selector></app-language-selector>
+<header class="shadow-lg dark:shadow-xl dark:shadow-indigo-900/50 bg-white dark:bg-gray-800 sticky top-0 z-40">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-center h-16">
+
+      <!-- Logo -->
+      <div class="flex-shrink-0">
+        <span class="text-2xl font-extrabold text-indigo-600 dark:text-indigo-400">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+               class="inline-block mr-2 align-text-bottom">
+            <path d="M12 2l8 4.5v9l-8 4.5-8-4.5v-9L12 2z"/>
+            <path d="M12 2v20"/>
+            <path d="M20 6l-8 4.5l-8-4.5"/>
+            <path d="M4 15.5l8 4.5l8-4.5"/>
+          </svg>
+          TyriaVault
+        </span>
+      </div>
+
+      <!-- Desktop Navigation -->
+      <nav class="hidden md:flex md:space-x-4 lg:space-x-8 items-center">
+
+        @for (item of navItems; track item) {
+          @if (!item.subItems) {
+            <button
+              (click)="selectPage(item.id, item.path)"
+              [class]="isCurrentPage(item.id)
+                ? 'text-indigo-600 dark:text-indigo-400 border-b-2 border-indigo-500 font-semibold'
+                : 'text-gray-600 hover:text-indigo-600 dark:text-gray-300 dark:hover:text-indigo-400'"
+              class="px-3 py-2 text-sm font-medium rounded-md transition-colors duration-200">
+              {{ item.label | transloco }}
+            </button>
+          }
+
+          @if (item.subItems) {
+            <div class="relative group">
+              <button
+                (click)="toggleAccountDropdown()"
+                (blur)="closeAccountDropdown()"
+                class="flex items-center px-3 py-2 text-sm font-medium rounded-md transition-colors duration-200"
+                [class]="isAccountActive()
+                  ? 'text-indigo-600 dark:text-indigo-400 border-b-2 border-indigo-500 font-semibold'
+                  : 'text-gray-600 hover:text-indigo-600 dark:text-gray-300 dark:hover:text-indigo-400'">
+                {{ item.label | transloco }}
+                <svg class="ml-1 h-5 w-5 transition-transform duration-200"
+                     [class.rotate-180]="isAccountDropdownOpen()"
+                     xmlns="http://www.w3.org/2000/svg"
+                     viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd"
+                        d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.25 4.25a.75.75 0 01-1.06 0L5.21 8.27a.75.75 0 01.02-1.06z"
+                        clip-rule="evenodd"/>
+                </svg>
+              </button>
+
+              @if (isAccountDropdownOpen()) {
+                <div
+                  class="absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white dark:bg-gray-700 ring-1 ring-black ring-opacity-5 focus:outline-none">
+                  @for (subItem of item.subItems; track subItem) {
+                    <button
+                      (click)="selectPage(subItem.id, subItem.path)"
+                      class="block px-4 py-2 text-sm w-full text-left transition-colors duration-150"
+                      [class]="isCurrentPage(subItem.id)
+                        ? 'bg-indigo-50 dark:bg-indigo-900/50 text-indigo-600 dark:text-indigo-400 font-medium'
+                        : 'text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600'">
+                      {{ subItem.label | transloco }}
+                    </button>
+                  }
+                </div>
+              }
+            </div>
+          }
+        }
+      </nav>
+
+      <!-- Controls -->
+      <div class="flex items-center space-x-4">
+
+        <!-- Language -->
+        <app-language-selector></app-language-selector>
+
+        <!-- Theme toggle -->
+        <app-theme-toggle></app-theme-toggle>
+
+        <!-- Mobile Menu Button -->
+        <button
+          (click)="toggleMobileMenu()"
+          type="button"
+          class="md:hidden p-2 rounded-full text-gray-600 dark:text-gray-300 hover:bg-gray-100
+          dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          aria-controls="mobile-menu"
+          aria-expanded="false">
+
+          @if (!isMenuOpen()) {
+            <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none"
+                 viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M4 6h16M4 12h16M4 18h16"/>
+            </svg>
+          }
+
+          @if (isMenuOpen()) {
+            <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none"
+                 viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M6 18L18 6M6 6l12 12"/>
+            </svg>
+          }
+        </button>
+      </div>
+    </div>
   </div>
 
-  <nav *transloco="let t" class="flex flex-wrap gap-6 text-sm font-semibold">
-    <button type="button" (click)="navigate('/')" class="text-gray-900 dark:text-gray-100 hover:text-red-600 dark:hover:text-red-400">{{ t('header.home') }}</button>
-    <button type="button" (click)="navigate('/account')" class="text-gray-900 dark:text-gray-100 hover:text-red-600 dark:hover:text-red-400">{{ t('header.account') }}</button>
-    <button type="button" (click)="navigate('/characters')" class="text-gray-900 dark:text-gray-100 hover:text-red-600 dark:hover:text-red-400">{{ t('header.characters') }}</button>
-    <button type="button" (click)="navigate('/tradingpost')" class="text-gray-900 dark:text-gray-100 hover:text-red-600 dark:hover:text-red-400">{{ t('header.tradingpost') }}</button>
-    <button type="button" (click)="navigate('/analytics')" class="text-gray-900 dark:text-gray-100 hover:text-red-600 dark:hover:text-red-400">{{ t('header.analytics') }}</button>
-  </nav>
+  <!-- Mobile Menu -->
+  @if (isMenuOpen()) {
+    <div class="md:hidden transition-all duration-300 ease-in-out" id="mobile-menu">
+      <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
 
-  <div>
-  <a class="text-sm font-semibold text-gray-900 dark:text-gray-100 hover:text-red-600 dark:hover:text-red-400">
-    API Key Setup
-    <span aria-hidden="">→</span>
-  </a>
-</div>
+        @for (item of navItems; track item) {
+          @if (!item.subItems) {
+            <button
+              (click)="selectPage(item.id, item.path); toggleMobileMenu()"
+              [class]="isCurrentPage(item.id)
+                ? 'bg-indigo-50 dark:bg-indigo-700/50 text-indigo-700 dark:text-indigo-300 font-semibold'
+                : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'"
+              class="block w-full text-left px-3 py-2 rounded-md text-base font-medium transition-colors">
+              {{ item.label | transloco }}
+            </button>
+          }
+
+          @if (item.subItems) {
+            <div class="space-y-1">
+              <button
+                (click)="toggleMobileAccountDropdown()"
+                class="flex justify-between items-center w-full px-3 py-2 rounded-md text-base font-medium transition-colors"
+                [class]="isAccountActive()
+                  ? 'bg-indigo-50 dark:bg-indigo-700/50 text-indigo-700 dark:text-indigo-300 font-semibold'
+                  : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'">
+                <span>{{ item.label | transloco }}</span>
+                <svg class="ml-1 h-5 w-5 transition-transform duration-200"
+                     [class.rotate-180]="isMobileAccountDropdownOpen()"
+                     xmlns="http://www.w3.org/2000/svg"
+                     viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd"
+                        d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.25 4.25a.75.75 0 01-1.06 0L5.21 8.27a.75.75 0 01.02-1.06z"
+                        clip-rule="evenodd"/>
+                </svg>
+              </button>
+
+              @if (isMobileAccountDropdownOpen()) {
+                <div class="pl-4 border-l border-indigo-500/50 space-y-1">
+                  @for (subItem of item.subItems; track subItem) {
+                    <button
+                      (click)="selectPage(subItem.id, subItem.path); toggleMobileMenu()"
+                      class="block w-full text-left px-3 py-2 rounded-md text-sm font-medium transition-colors"
+                      [class]="isCurrentPage(subItem.id)
+                        ? 'bg-indigo-100 dark:bg-indigo-800/50 text-indigo-700 dark:text-indigo-200 font-medium'
+                        : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700'">
+                      {{ subItem.label | transloco }}
+                    </button>
+                  }
+                </div>
+              }
+            </div>
+          }
+        }
+
+        <!-- Mobile language -->
+        <app-mobile-language-selector></app-mobile-language-selector>
+      </div>
+    </div>
+  }
 </header>
