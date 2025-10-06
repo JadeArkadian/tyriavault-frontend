@@ -1,10 +1,11 @@
-import { Component, signal } from '@angular/core';
-import { Title } from '@angular/platform-browser';
+import {Component, inject} from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router, RouterOutlet } from '@angular/router';
-import { TranslocoService } from '@jsverse/transloco';
 import { filter, map, mergeMap } from 'rxjs/operators';
 import { FooterComponent } from './components/footer/footer.component';
 import { HeaderComponent } from './components/header/header.component';
+import { Title } from '@angular/platform-browser';
+import { TranslocoService } from '@jsverse/transloco';
+import {ThemeService} from './services/theme.service';
 
 @Component({
   selector: 'app-root',
@@ -13,14 +14,14 @@ import { HeaderComponent } from './components/header/header.component';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  protected readonly title = signal('tyriavault-frontend');
 
-  constructor(
-    private router: Router,
-    private activatedRoute: ActivatedRoute,
-    private titleService: Title,
-    private translocoService: TranslocoService
-  ) {
+  private readonly router = inject(Router)
+  private readonly activatedRoute = inject(ActivatedRoute)
+  private readonly titleService = inject(Title)
+  private readonly translocoService = inject(TranslocoService)
+  public readonly themeService = inject(ThemeService)
+
+  constructor() {
     this.router.events
       .pipe(
         filter(event => event instanceof NavigationEnd),
