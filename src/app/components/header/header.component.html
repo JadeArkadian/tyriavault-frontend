@@ -1,17 +1,82 @@
-<header
-  class="bg-indigo-600 text-white flex flex-wrap items-center justify-between px-6 py-3 shadow-md"
->
-  <!-- Izquierda: selector de idioma -->
-  <div class="flex items-center gap-2">
-    <app-language-selector></app-language-selector>
+<header class="shadow-lg dark:shadow-xl dark:shadow-indigo-900/50 bg-white dark:bg-gray-800 sticky top-0 z-40">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-center h-16">
+
+      <!-- Logo -->
+      <div class="flex-shrink-0">
+        <span class="text-2xl font-extrabold text-indigo-600 dark:text-indigo-400">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+               class="inline-block mr-2 align-text-bottom">
+            <path d="M12 2l8 4.5v9l-8 4.5-8-4.5v-9L12 2z"/>
+            <path d="M12 2v20"/>
+            <path d="M20 6l-8 4.5l-8-4.5"/>
+            <path d="M4 15.5l8 4.5l8-4.5"/>
+          </svg>
+          TyriaVault
+        </span>
+      </div>
+
+      <!-- Desktop Navigation -->
+      <app-desktop-navigation
+        [navItems]="navItems"
+        [currentPage]="currentPage()"
+        [isAccountDropdownOpen]="isAccountDropdownOpen()"
+        [selectPage]="selectPage.bind(this)"
+        [toggleAccountDropdown]="toggleAccountDropdown.bind(this)"
+        [closeAccountDropdown]="closeAccountDropdown.bind(this)"
+        [isCurrentPage]="isCurrentPage.bind(this)"
+        [isAccountActive]="isAccountActive.bind(this)">
+      </app-desktop-navigation>
+
+      <!-- Controls -->
+      <div class="flex items-center space-x-4">
+
+        <!-- Language -->
+        <app-desktop-language-selector></app-desktop-language-selector>
+
+        <!-- Theme toggle -->
+        <app-theme-toggle></app-theme-toggle>
+
+        <!-- Mobile Menu Button -->
+        <button
+          (click)="toggleMobileMenu()"
+          type="button"
+          class="md:hidden p-2 rounded-full text-gray-600 dark:text-gray-300 hover:bg-gray-100
+          dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          aria-controls="mobile-menu"
+          aria-expanded="false">
+
+          @if (!isMenuOpen()) {
+            <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none"
+                 viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M4 6h16M4 12h16M4 18h16"/>
+            </svg>
+          }
+
+          @if (isMenuOpen()) {
+            <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none"
+                 viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M6 18L18 6M6 6l12 12"/>
+            </svg>
+          }
+        </button>
+      </div>
+    </div>
   </div>
 
-  <!-- Centro: barra de navegación -->
-  <nav class="flex flex-wrap gap-6 text-sm font-semibold">
-    <button (click)="navigate('/')" class="hover:underline">Home</button>
-    <button (click)="navigate('/account')" class="hover:underline">Account</button>
-    <button (click)="navigate('/characters')" class="hover:underline">Characters</button>
-    <button (click)="navigate('/tradingpost')" class="hover:underline">Tradingpost</button>
-    <button (click)="navigate('/analytics')" class="hover:underline">Analytics</button>
-  </nav>
+  <!-- Mobile Menu -->
+  <app-mobile-navigation
+    [navItems]="navItems"
+    [isMenuOpen]="isMenuOpen()"
+    [isMobileAccountDropdownOpen]="isMobileAccountDropdownOpen()"
+    [currentPage]="currentPage()"
+    [selectPage]="selectPage.bind(this)"
+    [toggleMobileMenu]="toggleMobileMenu.bind(this)"
+    [toggleMobileAccountDropdown]="toggleMobileAccountDropdown.bind(this)"
+    [isCurrentPage]="isCurrentPage.bind(this)"
+    [isAccountActive]="isAccountActive.bind(this)">
+  </app-mobile-navigation>
 </header>

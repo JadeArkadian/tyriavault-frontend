@@ -1,0 +1,21 @@
+{
+  "header": {
+    "home": "Inicio",
+    "account": "Cuenta",
+    "characters": "Personajes",
+    "tradingpost": "Bazaar",
+    "analytics": "Estadísticas"
+  },
+  "footer": {
+    "licensedby": "Este proyecto está licenciado bajo la",
+    "mit": "licencia MIT",
+    "codedby": "Desarrollado por Jade Arkadian."
+  },
+  "titles": {
+    "home": "TyriaVault - Inicio",
+    "account": "TyriaVault - Cuenta",
+    "characters": "TyriaVault - Personajes",
+    "tradingpost": "TyriaVault - Bazaar",
+    "analytics": "TyriaVault - Estadísticas"
+  }
+}

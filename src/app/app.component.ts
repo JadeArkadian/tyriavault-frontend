@@ -1,7 +1,11 @@
-import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { HeaderComponent } from './components/header/header.component';
+import {Component, inject} from '@angular/core';
+import { ActivatedRoute, NavigationEnd, Router, RouterOutlet } from '@angular/router';
+import { filter, map, mergeMap } from 'rxjs/operators';
 import { FooterComponent } from './components/footer/footer.component';
+import { HeaderComponent } from './components/header/header.component';
+import { Title } from '@angular/platform-browser';
+import { TranslocoService } from '@jsverse/transloco';
+import {ThemeService} from './services/theme.service';
 
 @Component({
   selector: 'app-root',
@@ -10,5 +14,30 @@ import { FooterComponent } from './components/footer/footer.component';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  protected readonly title = signal('tyriavault-frontend');
+
+  private readonly router = inject(Router)
+  private readonly activatedRoute = inject(ActivatedRoute)
+  private readonly titleService = inject(Title)
+  private readonly translocoService = inject(TranslocoService)
+  public readonly themeService = inject(ThemeService)
+
+  constructor() {
+    this.router.events
+      .pipe(
+        filter(event => event instanceof NavigationEnd),
+        map(() => this.activatedRoute),
+        map(route => {
+          while (route.firstChild) route = route.firstChild;
+          return route;
+        }),
+        mergeMap(route => route.data)
+      )
+      .subscribe(data => {
+        if (data['titleKey']) {
+          this.translocoService.selectTranslate(data['titleKey']).subscribe(title => {
+            this.titleService.setTitle(title);
+          });
+        }
+      });
+  }
 }

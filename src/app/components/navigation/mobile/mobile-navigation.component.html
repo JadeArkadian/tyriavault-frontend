@@ -1,0 +1,58 @@
+@if (isMenuOpen) {
+  <div class="md:hidden transition-all duration-300 ease-in-out" id="mobile-menu">
+    <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+
+      @for (item of navItems; track item) {
+        @if (!item.subItems) {
+          <button
+            (click)="selectPage(item.id, item.path); toggleMobileMenu()"
+            [class]="isCurrentPage(item.id)
+                ? 'bg-indigo-50 dark:bg-indigo-700/50 text-indigo-700 dark:text-indigo-300 font-semibold'
+                : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'"
+            class="block w-full text-left px-3 py-2 rounded-md text-base font-medium transition-colors">
+            {{ item.label | transloco }}
+          </button>
+        }
+
+        @if (item.subItems) {
+          <div class="space-y-1">
+            <button
+              (click)="toggleMobileAccountDropdown()"
+              class="flex justify-between items-center w-full px-3 py-2 rounded-md text-base font-medium transition-colors"
+              [class]="isAccountActive()
+                  ? 'bg-indigo-50 dark:bg-indigo-700/50 text-indigo-700 dark:text-indigo-300 font-semibold'
+                  : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'">
+              <span>{{ item.label | transloco }}</span>
+              <svg class="ml-1 h-5 w-5 transition-transform duration-200"
+                   [class.rotate-180]="isMobileAccountDropdownOpen"
+                   xmlns="http://www.w3.org/2000/svg"
+                   viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd"
+                      d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.25 4.25a.75.75 0 01-1.06 0L5.21 8.27a.75.75 0 01.02-1.06z"
+                      clip-rule="evenodd"/>
+              </svg>
+            </button>
+
+            @if (isMobileAccountDropdownOpen) {
+              <div class="pl-4 border-l border-indigo-500/50 space-y-1">
+                @for (subItem of item.subItems; track subItem) {
+                  <button
+                    (click)="selectPage(subItem.id, subItem.path); toggleMobileMenu()"
+                    class="block w-full text-left px-3 py-2 rounded-md text-sm font-medium transition-colors"
+                    [class]="isCurrentPage(subItem.id)
+                        ? 'bg-indigo-100 dark:bg-indigo-800/50 text-indigo-700 dark:text-indigo-200 font-medium'
+                        : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700'">
+                    {{ subItem.label | transloco }}
+                  </button>
+                }
+              </div>
+            }
+          </div>
+        }
+      }
+
+      <!-- Mobile language -->
+      <app-mobile-language-selector></app-mobile-language-selector>
+    </div>
+  </div>
+}
