@@ -1,4 +1,5 @@
-import {Component, inject, signal} from '@angular/core';
+import {Component, inject} from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
@@ -12,7 +13,7 @@ export class MobileLanguageSelectorComponent {
   private readonly translocoService = inject(TranslocoService);
 
   // Language state: 'es' for Spanish, 'en' for English, etc.
-  public currentLanguage = signal('en');
+  public currentLanguage = toSignal(this.translocoService.langChanges$, { initialValue: this.translocoService.getActiveLang() });
 
   // Sets the selected language
   public changeLang(event: Event) {
@@ -22,7 +23,6 @@ export class MobileLanguageSelectorComponent {
     console.debug(langCode);
 
     if (langCode != null) {
-      this.currentLanguage.set(langCode);
       this.translocoService.setActiveLang(langCode);
     }
   }
