@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
+import { RestApiService } from '../../services/rest-api.service';
 
 @Component({
   selector: 'app-home',
@@ -7,25 +8,38 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home.component.css'] 
 })
 export class HomeComponent implements OnInit {
+
+  public restApiService = inject(RestApiService)
   
   // Variable para almacenar la clave de API introducida por el usuario
-  apiKey: string = '';
+  public apiKey: string = '';
 
 
   public ngOnInit(): void {
     // Lógica de inicialización, como comprobar si ya hay una API key almacenada
   }
 
-  /**
-   * Envía la clave de API para validación y almacenamiento.
-   */
   public submitApiKey(): void {
-    if (this.apiKey.length > 10 && this.apiKey.startsWith('A')) { // Validación simple inicial
-      console.log('Clave de API enviada:', this.apiKey);
+
+    if (this.apiKey.length > 10 ) {
+      console.debug('ApiKey:', this.apiKey);
+
+      this.restApiService.tokeninfo(this.apiKey).subscribe({
+        next: json => {
+          console.debug('ApiKey is Ok!');
+          console.debug('Apikey=' + json.api_key);
+          console.debug('permissions=' + json.permissions);
+        },
+        error: err => {
+          console.error(err);
+        }  
+      })
+
+      
+
       // Lógica real:
       // 1. Llamar a un servicio (ej. accountService.validateAndSave(this.apiKey)).
       // 2. Navegar a la página de "Account" o "Characters".
-      alert('Clave de API recibida. ¡Navegando a la Bóveda!');
 
       // Ejemplo de redirección (requiere Router):
       // this.router.navigate(['/account']); 
