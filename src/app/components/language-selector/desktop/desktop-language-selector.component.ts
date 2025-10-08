@@ -23,7 +23,6 @@ export class DesktopLanguageSelectorComponent {
     console.debug(langCode);
 
     if (langCode != null) {
-      //this.currentLanguage = langCode;
       this.translocoService.setActiveLang(langCode);
     }
   }
