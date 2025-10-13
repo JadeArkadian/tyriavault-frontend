@@ -1,13 +1,13 @@
 <div class="bg-gray-50 dark:bg-gray-900 p-4 sm:p-8 transition-colors duration-300">
-  
+
   <div class="text-center mb-8">
     <h1 class=" text-3xl font-bold text-center mb-10 text-gray-800 dark:text-gray-100 ">
       Bienvenido a TyriaVault ⚔️
     </h1>
   </div>
-  
+
   <div class="max-w-6xl mx-auto flex flex-col lg:flex-row lg:space-x-12 space-y-8 lg:space-y-0 ">
-    
+
     <div class="lg:w-1/2 p-6 rounded-xl shadow-2xl bg-gray-50 dark:bg-gray-800 border border-indigo-500 dark:border-indigo-400 ">
       <h2 class="text-3xl font-bold mb-4 text-gray-900 dark:text-white">
         ¿Que es TyriaVault?
@@ -15,18 +15,18 @@
       <p class="text-gray-600 dark:text-gray-300 mb-8">
         TyriaVault es una aplicación de codigo abierto que se apoya en la API oficial de <b>GuildWars 2</b> con la que podrás consultar los datos de tu cuenta, personajes, equipo e información de comercio en cualquier momento fuera del juego.
       </p>
-      
+
       <ul class="space-y-4">
         <li class="flex items-center text-gray-800 dark:text-gray-200">
-          <span class="text-xl mr-3 text-yellow-600 dark:text-yellow-400">💰</span> 
+          <span class="text-xl mr-3 text-yellow-600 dark:text-yellow-400">💰</span>
           <span class="font-semibold">Visión General de la Cuenta:</span> Niveles de Maestría y Logros.
         </li>
         <li class="flex items-center text-gray-800 dark:text-gray-200">
-          <span class="text-xl mr-3 text-orange-600 dark:text-orange-400">📈</span> 
+          <span class="text-xl mr-3 text-orange-600 dark:text-orange-400">📈</span>
           <span class="font-semibold">Análisis del Comercio:</span> Estadísticas del Puesto de Comercio.
         </li>
         <li class="flex items-center text-gray-800 dark:text-gray-200">
-          <span class="text-xl mr-3 text-indigo-600 dark:text-indigo-400">🛡️</span> 
+          <span class="text-xl mr-3 text-indigo-600 dark:text-indigo-400">🛡️</span>
           <span class="font-semibold">Seguimiento de Personajes:</span> Inventario, equipo y builds.
         </li>
       </ul>
@@ -36,20 +36,37 @@
       <h2 class="text-3xl font-bold mb-6 text-gray-900 dark:text-white">
         ¡Comencemos!
       </h2>
-      <p class="text-gray-600 dark:text-gray-300 mb-6">
-        Para poder usar la mayoría de sus funcionalidades, TyriaVault necesita una clave de la API de Guild Wars 2 para funcionar.
-      </p>
 
+      <!-- Success View -->
+       @if (apiKeyValid) {
+      <div class="space-y-6 text-center">
+        <p class="text-green-600 dark:text-green-400 font-semibold text-lg">
+          ✅ ¡Clave API guardada correctamente!
+        </p>
+        <div class="p-4 bg-gray-100 dark:bg-gray-700 rounded-lg">
+          <p class="text-gray-800 dark:text-gray-200">Clave activa:</p>
+          <p class="font-mono text-indigo-600 dark:text-indigo-400">{{ apiKeySaved }}</p>
+        </div>
+        <button (click)="changeApiKey()" class="w-full py-3 px-6 rounded-lg font-bold text-white bg-red-600 hover:bg-red-700 dark:bg-red-500 dark:hover:bg-red-600 shadow-lg transition duration-300">
+          Cambiar Clave
+        </button>
+      </div>
+      }
+      <!-- Form View -->
+      @else {
       <div class="space-y-6">
+        <p class="text-gray-600 dark:text-gray-300">
+          Para poder usar la mayoría de sus funcionalidades, TyriaVault necesita una clave de la API de Guild Wars 2 para funcionar.
+        </p>
         <ol class="list-decimal list-inside space-y-2 text-gray-700 dark:text-gray-200">
           <li>
-            <span class="font-semibold">Obtén tu API Key: </span> 
-            <a href="https://account.arena.net/applications " target="_blank" class="text-indigo-600 dark:text-indigo-400 hover:underline">Enlace al sitio oficial de GW2</a>
+            <span class="font-semibold">Obtén tu API Key: </span>
+            <a href="https://account.arena.net/applications" target="_blank" class="text-indigo-600 dark:text-indigo-400 hover:underline">Enlace al sitio oficial de GW2</a>
           </li>
           <li>
-            <span class="font-semibold">Permisos Requeridos:</span> 
-            <code class="bg-gray-200 dark:bg-gray-700 p-1 rounded text-sm">account</code>, 
-            <code class="bg-gray-200 dark:bg-gray-700 p-1 rounded text-sm">characters</code>, 
+            <span class="font-semibold">Permisos Requeridos:</span>
+            <code class="bg-gray-200 dark:bg-gray-700 p-1 rounded text-sm">account</code>,
+            <code class="bg-gray-200 dark:bg-gray-700 p-1 rounded text-sm">characters</code>,
             <code class="bg-gray-200 dark:bg-gray-700 p-1 rounded text-sm">tradingpost</code>
           </li>
           <li>
@@ -57,24 +74,42 @@
           </li>
         </ol>
 
-        <input 
-          type="text" 
-          placeholder="Pega tu clave de API aquí..."
-          class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg 
-                 bg-white dark:bg-gray-700 text-gray-900 dark:text-white 
-                 focus:ring-indigo-500 focus:border-indigo-500 transition duration-150"
-          (input)="apiKey = $event.target.value"
-          >
-        
-        <button 
-          class="w-full py-3 px-6 rounded-lg font-bold text-white 
-                 bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-600 
-                 shadow-lg transition duration-300 transform hover:scale-[1.01]"
-          [disabled]="!apiKey"
-          (click)="submitApiKey()">
-          Acceder a mi Bóveda
-        </button>
+        <form [formGroup]="apiKeyForm" (ngSubmit)="submitApiKey()" class="space-y-4">
+          <div>
+            <input
+              type="text"
+              formControlName="apiKey"
+              placeholder="Pega tu clave de API aquí..."
+              [ngClass]="{'border-red-500 dark:border-red-500': errorMessage}"
+              class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-indigo-500 focus:border-indigo-500 transition duration-150">
+            
+              @if (errorMessage) {
+              <div class="text-red-600 dark:text-red-400 mt-2 text-sm"> {{ errorMessage }} </div>
+              }
+          </div>
+
+          <button type="submit" class="w-full py-3 px-6 rounded-lg font-bold text-white bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-500
+           dark:hover:bg-indigo-600 shadow-lg transition duration-300 transform hover:scale-[1.01] flex items-center justify-center gap-3"
+                  [disabled]="isLoading" [ngClass]="{'bg-gray-400 dark:bg-gray-600 cursor-not-allowed': isLoading }">
+
+            @if (!isLoading) {
+            <ng-container>Acceder a mi Bóveda</ng-container>
+            }
+            @else {
+            <ng-template #loadingSpinner>
+              <span class="flex items-center justify-center">
+                <svg class="animate-spin h-6 w-6 text-white mx-auto" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                  <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V4a4 4 0 00-4 4H4z"></path>
+                </svg>
+                <span class="ml-2">Verificando...</span>
+              </span>
+            </ng-template>
+            }
+          </button>
+        </form>
       </div>
+    }
     </div>
   </div>
 </div>
@@ -84,9 +119,9 @@
     <h2 class="text-3xl font-medium text-center mb-10 text-gray-800 dark:text-white">
       Seguridad, Transparencia y Comunidad
     </h2>
-    
+
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-      
+
       <div class="p-6 rounded-xl shadow-lg bg-gray-50 dark:bg-gray-800 border-t-4 border-red-500">
         <div class="text-4xl text-red-600 dark:text-red-400 mb-4">🔒</div>
         <h3 class="text-xl font-semibold mb-3 text-gray-900 dark:text-white">
@@ -115,11 +150,11 @@
         <p class="text-gray-600 dark:text-gray-300 mb-4">
           TyriaVault es un proyecto con licencia MIT. Colabora, sugiere nuevas funciones o reporta errores.
         </p>
-        <a href="https://github.com/your-repo" target="_blank" 
+        <a href="https://github.com/your-repo" target="_blank"
            class="inline-block px-4 py-2 bg-purple-600 text-white text-sm font-medium rounded hover:bg-purple-700 transition duration-300">
            Ver en GitHub
         </a>
       </div>
-      
+
     </div>
   </div>

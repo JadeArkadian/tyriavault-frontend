@@ -8,8 +8,7 @@ import {MobileLanguageSelectorComponent} from '../../language-selector/mobile/mo
   standalone: true,
   imports: [TranslocoPipe, MobileLanguageSelectorComponent],
   templateUrl: './mobile-navigation.component.html',
-  styleUrl: './mobile-navigation.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.Default,
 })
 export class MobileNavigationComponent {
 

@@ -5,8 +5,7 @@ import { TranslocoService } from '@jsverse/transloco';
 @Component({
   selector: 'app-mobile-language-selector',
   standalone: true,
-  templateUrl: './mobile-language-selector.component.html',
-  styleUrls: ['./mobile-language-selector.component.css']
+  templateUrl: './mobile-language-selector.component.html'
 })
 export class MobileLanguageSelectorComponent {
 

@@ -1,14 +1,17 @@
 import { Injectable, signal, effect } from '@angular/core';
 
+/**
+ * Service in charge of switching between Dark theme and Light theme
+ */
 @Injectable({ providedIn: 'root' })
 export class ThemeService {
 
-  isDarkTheme = signal(
+  public isDarkTheme = signal(
     typeof window !== 'undefined' && window.matchMedia('(prefers-color-scheme: dark)').matches
   );
 
   constructor() {
-    // Aplicar clase 'dark' automáticamente al document
+    // Apply 'dark' to the document
     effect(() => {
       if (typeof document !== 'undefined') {
         if (this.isDarkTheme()) {
@@ -20,11 +23,10 @@ export class ThemeService {
     });
   }
 
-  toggleTheme(): void {
+  /**
+   * Switches from a theme to another
+   */
+  public toggleTheme(): void {
     this.isDarkTheme.update(current => !current);
-  }
-
-  setTheme(dark: boolean): void {
-    this.isDarkTheme.set(dark);
   }
 }
