@@ -11,7 +11,7 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideZonelessChangeDetection(),
-    provideRouter(routes), provideHttpClient(withInterceptors([loadingInterceptor])), provideTransloco({
+    provideRouter(routes), provideHttpClient(/*withInterceptors([loadingInterceptor])*/), provideTransloco({
         config: {
           availableLangs: ['en','es','fr','de'],
           defaultLang: 'en',

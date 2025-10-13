@@ -36,15 +36,32 @@
       <h2 class="text-3xl font-bold mb-6 text-gray-900 dark:text-white">
         ¡Comencemos!
       </h2>
-      <p class="text-gray-600 dark:text-gray-300 mb-6">
-        Para poder usar la mayoría de sus funcionalidades, TyriaVault necesita una clave de la API de Guild Wars 2 para funcionar.
-      </p>
 
+      <!-- Success View -->
+       @if (apiKeyValid) {
+      <div class="space-y-6 text-center">
+        <p class="text-green-600 dark:text-green-400 font-semibold text-lg">
+          ✅ ¡Clave API guardada correctamente!
+        </p>
+        <div class="p-4 bg-gray-100 dark:bg-gray-700 rounded-lg">
+          <p class="text-gray-800 dark:text-gray-200">Clave activa:</p>
+          <p class="font-mono text-indigo-600 dark:text-indigo-400">{{ apiKeySaved }}</p>
+        </div>
+        <button (click)="changeApiKey()" class="w-full py-3 px-6 rounded-lg font-bold text-white bg-red-600 hover:bg-red-700 dark:bg-red-500 dark:hover:bg-red-600 shadow-lg transition duration-300">
+          Cambiar Clave
+        </button>
+      </div>
+      }
+      <!-- Form View -->
+      @else {
       <div class="space-y-6">
+        <p class="text-gray-600 dark:text-gray-300">
+          Para poder usar la mayoría de sus funcionalidades, TyriaVault necesita una clave de la API de Guild Wars 2 para funcionar.
+        </p>
         <ol class="list-decimal list-inside space-y-2 text-gray-700 dark:text-gray-200">
           <li>
             <span class="font-semibold">Obtén tu API Key: </span>
-            <a href="https://account.arena.net/applications " target="_blank" class="text-indigo-600 dark:text-indigo-400 hover:underline">Enlace al sitio oficial de GW2</a>
+            <a href="https://account.arena.net/applications" target="_blank" class="text-indigo-600 dark:text-indigo-400 hover:underline">Enlace al sitio oficial de GW2</a>
           </li>
           <li>
             <span class="font-semibold">Permisos Requeridos:</span>
@@ -57,31 +74,42 @@
           </li>
         </ol>
 
-        <input
-          type="text"
-          placeholder="Pega tu clave de API aquí..."
-          class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg
-                 bg-white dark:bg-gray-700 text-gray-900 dark:text-white
-                 focus:ring-indigo-500 focus:border-indigo-500 transition duration-150"
-          (input)="apiKey = $event.target.value" [disabled]="isLoading">
+        <form [formGroup]="apiKeyForm" (ngSubmit)="submitApiKey()" class="space-y-4">
+          <div>
+            <input
+              type="text"
+              formControlName="apiKey"
+              placeholder="Pega tu clave de API aquí..."
+              [ngClass]="{'border-red-500 dark:border-red-500': errorMessage}"
+              class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-indigo-500 focus:border-indigo-500 transition duration-150">
+            
+              @if (errorMessage) {
+              <div class="text-red-600 dark:text-red-400 mt-2 text-sm"> {{ errorMessage }} </div>
+              }
+          </div>
 
-        <button class="w-full py-3 px-6 rounded-lg font-bold text-white
-                 bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-600
-                 shadow-lg transition duration-300 transform hover:scale-[1.01] flex items-center justify-center gap-3"
-          [ngClass]="{'bg-gray-400 dark:bg-gray-600 cursor-not-allowed': isLoading}"
-          (click)="submitApiKey()" [disabled]="isLoading">
-          @if (!isLoading) { Acceder a mi Bóveda }
-          @else {
-            <span class="flex items-center justify-center">
-              <svg class="animate-spin h-6 w-6 text-white mx-auto" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
-              </svg>
-              <span class="ml-2">Verificando...</span>
-            </span>
-          }
-        </button>
+          <button type="submit" class="w-full py-3 px-6 rounded-lg font-bold text-white bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-500
+           dark:hover:bg-indigo-600 shadow-lg transition duration-300 transform hover:scale-[1.01] flex items-center justify-center gap-3"
+                  [disabled]="isLoading" [ngClass]="{'bg-gray-400 dark:bg-gray-600 cursor-not-allowed': isLoading }">
+
+            @if (!isLoading) {
+            <ng-container>Acceder a mi Bóveda</ng-container>
+            }
+            @else {
+            <ng-template #loadingSpinner>
+              <span class="flex items-center justify-center">
+                <svg class="animate-spin h-6 w-6 text-white mx-auto" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                  <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V4a4 4 0 00-4 4H4z"></path>
+                </svg>
+                <span class="ml-2">Verificando...</span>
+              </span>
+            </ng-template>
+            }
+          </button>
+        </form>
       </div>
+    }
     </div>
   </div>
 </div>
