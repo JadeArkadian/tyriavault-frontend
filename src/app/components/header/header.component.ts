@@ -44,6 +44,10 @@ export class HeaderComponent {
 
   // --- Methods ---
 
+  /**
+   * Method called to force the navigation
+   * @param path Path to be called
+   */
   public navigate(path: string): void {
     if (path != null) {
       this.router.navigateByUrl(path);
