@@ -1,6 +1,10 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { TranslocoDirective } from '@jsverse/transloco';
 
+/**
+ * Represents the footer section of the application.
+ * This component displays copyright information, links, and other footer content.
+ */
 @Component({
   selector: 'app-footer',
   standalone: true,

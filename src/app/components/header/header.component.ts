@@ -1,12 +1,18 @@
-import {ChangeDetectionStrategy, Component, signal, inject} from '@angular/core';
+import {ChangeDetectionStrategy, Component, signal, inject, OnInit} from '@angular/core';
 import {ThemeToggleComponent} from '../theme-toggle/theme-toggle.component';
 import {DesktopLanguageSelectorComponent} from '../language-selector/desktop/desktop-language-selector.component';
-import {Router} from '@angular/router';
+import {NavigationEnd, Router} from '@angular/router';
 import {DesktopNavigationComponent} from '../navigation/desktop/desktop-navigation.component';
 import {NavItem} from '../../interfaces/nav-item';
 import {MobileNavigationComponent} from '../navigation/mobile/mobile-navigation.component';
+import {filter} from 'rxjs/operators';
 
 
+/**
+ * This is the Header component. It wraps components for navigation both for mobile and  desktop platforms
+ * @see MobileNavigationComponent @see DesktopNavigationComponent , a theme toggler @see ThemeToggleComponent
+ * and also a Language selection @see DesktopLanguageSelectorComponent.
+ */
 @Component({
   selector: 'app-header',
   standalone: true,
@@ -14,7 +20,7 @@ import {MobileNavigationComponent} from '../navigation/mobile/mobile-navigation.
   templateUrl: './header.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
 
   private readonly router = inject(Router);
 
@@ -42,6 +48,22 @@ export class HeaderComponent {
     { id: 'analytics', label: 'header.analytics', path: '/analytics' },
   ];
 
+  /**
+   * Init of the component. 
+   * Sets the currentPage so the navBar knows which page we are on
+   */
+  public ngOnInit(): void {
+    this.router.events.pipe(
+      filter((event): event is NavigationEnd => event instanceof NavigationEnd)
+    ).subscribe((event: NavigationEnd) => {
+      const currentPath = event.urlAfterRedirects;
+      const activeItem = this.navItems.find(item => item.path === currentPath);
+      if (activeItem) {
+        this.currentPage.set(activeItem.id);
+      }
+    });
+  }
+
   // --- Methods ---
 
   /**
@@ -54,7 +76,9 @@ export class HeaderComponent {
     }
   }
 
-  // Toggles the mobile hamburger menu
+  /**
+   * Toggles the mobile hamburger menu
+   */
   public toggleMobileMenu(): void {
     this.isMenuOpen.update(current => !current);
     // Ensure mobile account dropdown is closed when closing main menu
@@ -63,36 +87,54 @@ export class HeaderComponent {
     }
   }
 
-  // Toggles the desktop 'Account' dropdown
+  /**
+   * Toggles the desktop 'Account' dropdown
+   */
   public toggleAccountDropdown(): void {
     this.isAccountDropdownOpen.update(current => !current);
   }
 
-  // Closes the desktop 'Account' dropdown (used on blur)
+  /**
+   * Closes the desktop 'Account' dropdown (used on blur event)
+   */
   public closeAccountDropdown(): void {
     // Delay necessary to allow click event to register before blur closes it
     setTimeout(() => this.isAccountDropdownOpen.set(false), 150);
   }
 
-  // Toggles the mobile 'Account' dropdown
+  /**
+   * Toggles the mobile 'Account' dropdown
+   */
   public toggleMobileAccountDropdown(): void {
     this.isMobileAccountDropdownOpen.update(current => !current);
   }
 
-  // Sets the active page
+  /**
+   * Sets the active page both for Dekstop and Mobile menu
+   * @param pageId 
+   * @param pathUrl
+   */
   public selectPage(pageId: string, pathUrl:string): void {
     this.currentPage.set(pageId);
     this.navigate(pathUrl);
     this.isAccountDropdownOpen.set(false);
   }
 
-  // Helper to check if a page is the current page
+  /**
+   * Helper to check if a page is the current page
+   * @param pageId 
+   * @returns 
+   */
   public isCurrentPage(pageId: string): boolean {
     return this.currentPage() === pageId;
   }
 
-  // Helper to check if any Account sub-page is active,
-  // used to highlight the main 'Account' link/dropdown
+  /**
+   * Helper to check if any Account sub-page is active,
+   * used to highlight the main 'Account' link/dropdown
+   * TODO: Check if we should remove this since actually the account menu might not have submenus anymore
+   * @returns 
+   */
   public isAccountActive(): boolean {
     const accountItem = this.navItems.find(item => item.id === 'account');
     if (!accountItem?.subItems) return false;
