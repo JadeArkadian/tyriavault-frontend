@@ -9,6 +9,9 @@ import {ThemeService} from './services/theme.service';
 import { AsyncPipe } from '@angular/common';
 import { LoadingService } from './services/loading.service';
 
+/**
+ * The App component. Serves as entrypoint component of the whole application
+ */
 @Component({
   selector: 'app-root',
   imports: [RouterOutlet, HeaderComponent, FooterComponent, AsyncPipe],
@@ -26,6 +29,7 @@ export class AppComponent {
   public readonly loadingService = inject(LoadingService);
 
   constructor() {
+    // Changes the browser title by listening to the Navigation events from the router
     this.router.events
       .pipe(
         filter(event => event instanceof NavigationEnd),
