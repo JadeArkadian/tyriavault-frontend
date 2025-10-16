@@ -1,0 +1,85 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - "master"
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  build_and_analyze:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+      checks: write
+
+    steps:
+      - name: 🧭 Checkout repository
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: 📦 Setup PNPM
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: ⚙️ Setup Node.js 22
+        uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: "pnpm"
+
+      - name: 📥 Install dependencies
+        run: pnpm install
+
+      - name: 🧱 Build Angular app
+        run: pnpm run build
+
+      - name: 🧪 Run tests with coverage
+        run: pnpm run test:coverage
+
+      - name: 📂 Upload coverage report
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: ./coverage/lcov-report
+
+      - name: 🔎 SonarQube Scan
+        id: sonarqube-scan
+        if: github.event_name == 'pull_request' || github.ref == 'refs/heads/master'
+        uses: SonarSource/sonarqube-scan-action@master
+        continue-on-error: true 
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+      - name: 📊 SonarQube Quality Gate Check
+        if: steps.sonarqube-scan.outcome == 'success'
+        uses: SonarSource/sonarqube-quality-gate-action@master
+        timeout-minutes: 5
+        continue-on-error: true
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+      - name: 📤 Upload build artifacts
+        if: github.ref == 'refs/heads/master'
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-artifacts
+          path: dist/
+
+  deploy:
+    needs: build_and_analyze
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+
+    steps:
+      - name: 📥 Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: build-artifacts
+
+      - name: 📰 Deploy to Render
+        run: curl -X POST ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
