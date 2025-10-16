@@ -55,6 +55,14 @@ jobs:
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
+      - name: 📊 SonarQube Quality Gate Check
+        if: steps.sonarqube-scan.outcome == 'success'
+        uses: SonarSource/sonarqube-quality-gate-action@master
+        timeout-minutes: 5
+        continue-on-error: true
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
       - name: 📤 Upload build artifacts
         if: github.ref == 'refs/heads/master'
         uses: actions/upload-artifact@v4
