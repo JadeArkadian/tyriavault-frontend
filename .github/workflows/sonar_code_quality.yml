@@ -1,0 +1,51 @@
+name: SonarQube
+
+on:
+  workflow_run:
+    workflows: [ "CI Pipeline" ]
+    branches: [ "master" ]
+    types:
+      - completed
+
+jobs:
+  sonar:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      checks: write
+    steps:
+      - name: 🧭 Checkout repository
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: 📦 Setup PNPM
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+          run_install: true
+
+      - name: ⚙️ Setup Node.js 22
+        uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: "pnpm"
+
+      - name: 🧾 Run tests with coverage
+        env:
+          ENV: test
+        run: |
+          pnpm install
+          pnpm jest --coverage
+
+      - name: ️📂 Archive coverage data
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report-frontend
+          path: ./coverage/lcov-report
+
+      - name: '🔎 SonarQube Scan'
+        uses: SonarSource/sonarqube-scan-action@fd88b7d7ccbaefd23d8f36f73b59db7a3d246602
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
