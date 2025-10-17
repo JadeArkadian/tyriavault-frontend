@@ -1,28 +1,19 @@
 import { Injectable, signal } from '@angular/core';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable({providedIn: 'root'})
 export class StorageService {
-  // Private writable signal to hold the API key
-  private readonly _apiKey = signal<string | undefined>(
-    this.getApiKeyFromStorage()
-  );
 
-  // Private writable signal to hold the theme
+  private readonly _apiKey = signal<string | undefined>(this.getApiKeyFromStorage());
   private readonly _theme = signal<string | undefined>(this.getThemeFromStorage());
 
-  // Public readonly signal to expose the API key safely
   public readonly apiKey = this._apiKey.asReadonly();
-
-  // Public readonly signal to expose the theme safely
   public readonly theme = this._theme.asReadonly();
 
   /**
    * Sets the API key in the storage service.
    * @param apiKey The API key to store.
    */
-  setApiKey(apiKey: string): void {
+  public setApiKey(apiKey: string): void {
     this._apiKey.set(apiKey);
     localStorage.setItem('apiKey', apiKey);
   }
@@ -30,7 +21,7 @@ export class StorageService {
   /**
    * Clears the stored API key.
    */
-  clearApiKey(): void {
+  public clearApiKey(): void {
     this._apiKey.set(undefined);
     localStorage.removeItem('apiKey');
   }
@@ -39,7 +30,7 @@ export class StorageService {
    * Sets the theme in the storage service.
    * @param theme The theme to store.
    */
-  setTheme(theme: string): void {
+  public setTheme(theme: string): void {
     this._theme.set(theme);
     localStorage.setItem('theme', theme);
   }
@@ -47,7 +38,7 @@ export class StorageService {
   /**
    * Clears the stored theme.
    */
-  clearTheme(): void {
+  public clearTheme(): void {
     this._theme.set(undefined);
     localStorage.removeItem('theme');
   }
