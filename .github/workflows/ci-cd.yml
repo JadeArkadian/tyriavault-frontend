@@ -64,6 +64,7 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
       - run: |
+          cd .scannerwork
           ls -latr
           cat .sonar/report-task.txt
 
