@@ -42,7 +42,7 @@ jobs:
         run: pnpm run test:coverage
 
       - name: 📂 Upload coverage report
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 #v4.6.2
         with:
           name: coverage-report
           path: ./coverage/lcov-report
@@ -50,7 +50,7 @@ jobs:
       - name: 🔎 SonarQube Scan
         id: sonarqube-scan
         if: github.event_name == 'pull_request' || github.ref == 'refs/heads/master'
-        uses: SonarSource/sonarqube-scan-action@master
+        uses: SonarSource/sonarqube-scan-action@fd88b7d7ccbaefd23d8f36f73b59db7a3d246602 #v6
         continue-on-error: true 
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
@@ -58,7 +58,7 @@ jobs:
       - name: 📊 SonarQube Quality Gate Check
         id: sonarqube-quality-gate-check
         if: github.event_name == 'pull_request' || github.ref == 'refs/heads/master'
-        uses: SonarSource/sonarqube-quality-gate-action@master
+        uses: SonarSource/sonarqube-quality-gate-action@cf038b0e0cdecfa9e56c198bbb7d21d751d62c3b #v1.2.0
         timeout-minutes: 5
         continue-on-error: true
         env:
@@ -67,14 +67,14 @@ jobs:
       - name: 💬 Comment PR with SonarQube results
         if: github.event_name == 'pull_request'
         continue-on-error: true
-        uses: actions/github-script@v8
+        uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd #v8
         with:
           script: |
             const fs = require('fs');
             const sonarReportPath = '.scannerwork/report-task.txt';
 
             let sonarUrl = '';
-            let qualityGateStatus = ${{ steps.sonarqube-quality-gate-check.outputs.quality-gate-status }};
+            let qualityGateStatus = '${{ steps.sonarqube-quality-gate-check.outputs.quality-gate-status }}';
 
             try {
               if (fs.existsSync(sonarReportPath)) {
@@ -108,7 +108,7 @@ jobs:
 
       - name: 📤 Upload build artifacts
         if: github.ref == 'refs/heads/master'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 #v4.6.2
         with:
           name: build-artifacts
           path: dist/
@@ -120,9 +120,12 @@ jobs:
 
     steps:
       - name: 📥 Download build artifacts
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@634f93cb2916e3fdff6788551b99b062d0335ce0 #V5
         with:
           name: build-artifacts
 
       - name: 📰 Deploy to Render
-        run: curl -X POST ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
+        env:
+          RENDER_DEPLOY_HOOK: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
+
+        run: curl -X POST "$RENDER_DEPLOY_HOOK"
