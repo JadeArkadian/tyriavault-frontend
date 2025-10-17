@@ -93,10 +93,8 @@
                   [disabled]="isLoading" [ngClass]="{'bg-gray-400 dark:bg-gray-600 cursor-not-allowed': isLoading }">
 
             @if (!isLoading) {
-            <ng-container>Acceder a mi Bóveda</ng-container>
-            }
-            @else {
-            <ng-template #loadingSpinner>
+              Acceder a mi Bóveda
+            } @else {
               <span class="flex items-center justify-center">
                 <svg class="animate-spin h-6 w-6 text-white mx-auto" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                   <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
@@ -104,7 +102,6 @@
                 </svg>
                 <span class="ml-2">Verificando...</span>
               </span>
-            </ng-template>
             }
           </button>
         </form>
