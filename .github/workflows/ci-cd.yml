@@ -64,7 +64,8 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
       - run: |
-          ls
+          ls -latr
+          cat .sonar/report-task.txt
 
       - name: 💬 Comment PR with SonarQube results
         if: steps.sonarqube-scan.outcome == 'success'
