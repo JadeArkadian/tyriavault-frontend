@@ -1,9 +1,10 @@
-import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, effect, inject } from '@angular/core';
 import { RestApiService } from '../../services/rest-api.service';
 import { NgClass } from '@angular/common';
 import { finalize } from 'rxjs';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
+import { StorageService } from '../../services/storage.service';
 
 @Component({
   selector: 'app-home',
@@ -12,12 +13,12 @@ import { HttpErrorResponse } from '@angular/common/http';
   imports: [NgClass, ReactiveFormsModule],
   styleUrls: ['./home.component.css'],
 })
-export class HomeComponent implements OnInit {
-
+export class HomeComponent {
   //- Injects
   private readonly restApiService = inject(RestApiService);
   private readonly cdr = inject(ChangeDetectorRef);
   private readonly formBuilder = inject(FormBuilder);
+  private readonly storageService = inject(StorageService);
 
   //- Properties
   public isLoading = false;
@@ -30,16 +31,23 @@ export class HomeComponent implements OnInit {
     apiKey: ['', [Validators.required, Validators.minLength(72), Validators.maxLength(72)]],
   });
 
-  /**
-   * Init of the component
-   */
-  public ngOnInit(): void {
-    this.checkExistingApiKey();
+  constructor() {
+    effect(() => {
+      const apiKey = this.storageService.apiKey();
+      if (apiKey) {
+        this.apiKeyValid = true;
+        this.apiKeySaved = this.maskApiKey(apiKey);
+      } else {
+        this.apiKeyValid = false;
+        this.apiKeySaved = '';
+      }
+      this.cdr.detectChanges();
+    });
   }
 
   /**
    * Method called when the submit button is clicked
-   * @returns 
+   * @returns
    */
   public submitApiKey(): void {
     if (this.apiKeyForm.invalid) {
@@ -61,16 +69,11 @@ export class HomeComponent implements OnInit {
       )
       .subscribe({
         next: () => {
-          // TODO: Move localstorage things to a brand new service. Investigate if it is the best practice to do this
-          localStorage.setItem('api_key', apiKey);
-          this.apiKeyValid = true;
-          this.apiKeySaved = this.maskApiKey(apiKey);
+          this.storageService.setApiKey(apiKey);
           this.apiKeyForm.reset();
         },
         error: (err: HttpErrorResponse) => {
-          this.apiKeyValid = false;
-          localStorage.removeItem('api_key');
-
+          this.storageService.clearApiKey();
           if (err.status === 401 || err.status === 403) {
             this.errorMessage = 'La clave API es inválida o no tiene los permisos requeridos.';
           } else if (err.error?.message) {
@@ -86,23 +89,8 @@ export class HomeComponent implements OnInit {
    * Method called if the user clicks the "change button"
    */
   public changeApiKey(): void {
-    this.apiKeyValid = false;
-    this.apiKeySaved = '';
     this.errorMessage = '';
-    // TODO: Move localstorage things to a brand new service. Investigate if it is the best practice to do this
-    localStorage.removeItem('api_key');
-  }
-
-  /**
-   * Checks if there is already an API Key store in 
-   */
-  private checkExistingApiKey(): void {
-    // TODO: Move localstorage things to a brand new service. Investigate if it is the best practice to do this
-    const savedApiKey = localStorage.getItem('api_key');
-    if (savedApiKey) {
-      this.apiKeyValid = true;
-      this.apiKeySaved = this.maskApiKey(savedApiKey);
-    }
+    this.storageService.clearApiKey();
   }
 
   private maskApiKey(apiKey: string): string {

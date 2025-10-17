@@ -8,6 +8,7 @@ import { TranslocoService } from '@jsverse/transloco';
 import {ThemeService} from './services/theme.service';
 import { AsyncPipe } from '@angular/common';
 import { LoadingService } from './services/loading.service';
+import { LanguageService } from './services/language.service';
 
 /**
  * The App component. Serves as entrypoint component of the whole application
@@ -27,6 +28,7 @@ export class AppComponent {
   private readonly translocoService = inject(TranslocoService)
   public readonly themeService = inject(ThemeService)
   public readonly loadingService = inject(LoadingService);
+  private readonly languageService = inject(LanguageService);
 
   constructor() {
     // Changes the browser title by listening to the Navigation events from the router
