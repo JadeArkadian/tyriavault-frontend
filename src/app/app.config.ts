@@ -5,13 +5,13 @@ import {provideHttpClient, withInterceptors} from '@angular/common/http';
 import { provideTransloco } from '@jsverse/transloco';
 import { routes } from './app.routes';
 import { TranslocoHttpLoader } from './transloco-loader';
-import {loadingInterceptor} from './interceptors/loading.interceptor';
+import { dateConversionInterceptor } from './interceptors/date-conversion.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideZonelessChangeDetection(),
-    provideRouter(routes), provideHttpClient(/*withInterceptors([loadingInterceptor])*/), provideTransloco({
+    provideRouter(routes), provideHttpClient(withInterceptors([dateConversionInterceptor])) , provideTransloco({
         config: {
           availableLangs: ['en','es','fr','de'],
           defaultLang: 'en',

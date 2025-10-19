@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, signal, inject, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, signal, inject, OnInit, effect, ChangeDetectorRef} from '@angular/core';
 import {ThemeToggleComponent} from '../theme-toggle/theme-toggle.component';
 import {DesktopLanguageSelectorComponent} from '../language-selector/desktop/desktop-language-selector.component';
 import {NavigationEnd, Router} from '@angular/router';
@@ -6,6 +6,7 @@ import {DesktopNavigationComponent} from '../navigation/desktop/desktop-navigati
 import {NavItem} from '../../interfaces/nav-item';
 import {MobileNavigationComponent} from '../navigation/mobile/mobile-navigation.component';
 import {filter} from 'rxjs/operators';
+import { StorageService } from '../../services/storage.service';
 
 
 /**
@@ -23,6 +24,8 @@ import {filter} from 'rxjs/operators';
 export class HeaderComponent implements OnInit {
 
   private readonly router = inject(Router);
+  private readonly storageService = inject(StorageService);
+  private readonly cdr = inject(ChangeDetectorRef);
 
   // Menu states for mobile and desktop dropdowns
   public isMenuOpen = signal(false);
@@ -31,6 +34,7 @@ export class HeaderComponent implements OnInit {
 
   // Current active page ID
   public currentPage = signal('home');
+  public apiKeyValid = false;
 
   // --- Navigation Data ---
   public navItems: NavItem[] = [
@@ -47,6 +51,14 @@ export class HeaderComponent implements OnInit {
     { id: 'characters', label: 'header.characters', path: '/characters' },
     { id: 'analytics', label: 'header.analytics', path: '/analytics' },
   ];
+
+  constructor() {
+    effect(() => {
+      const apiKey = this.storageService.apiKey();
+      this.apiKeyValid = apiKey ? true : false;
+      this.cdr.detectChanges();
+    });
+  }
 
   /**
    * Init of the component. 
