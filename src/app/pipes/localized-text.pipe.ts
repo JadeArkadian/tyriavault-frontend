@@ -29,7 +29,7 @@ export class LocalizedTextPipe implements PipeTransform {
 
     const activeLang = this.translocoService.getActiveLang() as keyof LocalizedText;
 
-    if (Object.prototype.hasOwnProperty.call(value, activeLang)) {
+    if (Object.hasOwn(value, activeLang)) {
       return value[activeLang];
     }
 
