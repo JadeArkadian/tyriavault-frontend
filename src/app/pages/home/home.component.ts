@@ -59,16 +59,14 @@ export class HomeComponent {
     this.errorMessage = '';
     const apiKey = this.apiKeyForm.value.apiKey!;
 
-    this.restApiService
-      .tokeninfo(apiKey)
-      .pipe(
-        finalize(() => {
+    this.restApiService.tokeninfo(apiKey)
+      .pipe(finalize(() => {
           this.isLoading = false;
           this.cdr.detectChanges();
-        }),
-      )
+        }))
       .subscribe({
-        next: () => {
+        next: (response) => {
+          console.debug(response)
           this.storageService.setApiKey(apiKey);
           this.apiKeyForm.reset();
         },

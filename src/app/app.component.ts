@@ -7,7 +7,6 @@ import { Title } from '@angular/platform-browser';
 import { TranslocoService } from '@jsverse/transloco';
 import {ThemeService} from './services/theme.service';
 import { AsyncPipe } from '@angular/common';
-import { LoadingService } from './services/loading.service';
 import { LanguageService } from './services/language.service';
 
 /**
@@ -15,7 +14,7 @@ import { LanguageService } from './services/language.service';
  */
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, HeaderComponent, FooterComponent, AsyncPipe],
+  imports: [RouterOutlet, HeaderComponent, FooterComponent],
   standalone: true,
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
@@ -27,7 +26,6 @@ export class AppComponent {
   private readonly titleService = inject(Title)
   private readonly translocoService = inject(TranslocoService)
   public readonly themeService = inject(ThemeService)
-  public readonly loadingService = inject(LoadingService);
   private readonly languageService = inject(LanguageService);
 
   constructor() {

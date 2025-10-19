@@ -1,11 +1,11 @@
 <main class="p-4 md:p-8">
         <div class="max-w-7xl mx-auto flex flex-col lg:flex-row gap-8">
-            
+
             <aside class="lg:w-64 lg:flex-shrink-0">
-                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
-                    <div class="flex items-center gap-4 pb-6 mb-6 border-b border-slate-200 dark:border-gray-700">
+                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-2 top-4">
+                    <div class="flex items-center gap-4 pb-3 pt-2 mb-6 border-b border-slate-200 dark:border-gray-700">
                         <img class="w-12 h-12 rounded-full object-cover" src="https://render.guildwars2.com/file/32633AF8ADEA696A1EF56D3AE32D617B10D3AC57/157353.png" alt="User Avatar">
-                        <span class="font-semibold text-lg">Dragonheart.1234</span>
+                        <span class="font-semibold text-lg">{{ accountData.account_name }}</span>
                     </div>
                     <nav class="space-y-2">
                         <a href="#" class="block px-4 py-2 rounded-md bg-blue-500 text-white font-medium">Resumen</a>
@@ -18,7 +18,7 @@
                     </nav>
                 </div>
             </aside>
-            
+
             <section class="flex-1">
                 <h1 class="text-3xl font-bold mb-8">Resumen de la Cuenta</h1>
 
@@ -27,23 +27,23 @@
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-4 gap-x-6">
                         <div>
                             <p class="text-sm text-slate-500 dark:text-gray-400">Nombre de Cuenta:</p>
-                            <span class="block font-medium">Dragonheart.1234</span>
+                            <span class="block font-medium">{{ accountData.account_name }}</span>
                         </div>
                         <div>
                             <p class="text-sm text-slate-500 dark:text-gray-400">Creación:</p>
-                            <span class="block font-medium">2012-08-28</span>
+                            <span class="block font-medium">{{ accountData.creation_date | date: 'dd/MM/yyyy'}}</span>
                         </div>
                         <div>
                             <p class="text-sm text-slate-500 dark:text-gray-400">Mundo (Servidor):</p>
-                            <span class="block font-medium">Tarnished Coast [NA]</span>
+                            <span class="block font-medium">{{ accountData.world_name | localizedText }}</span>
                         </div>
                         <div>
                             <p class="text-sm text-slate-500 dark:text-gray-400">Nivel de Fractal:</p>
-                            <span class="block font-medium">125</span>
+                            <span class="block font-medium">{{ accountData.fractal_level }}</span>
                         </div>
                         <div>
                             <p class="text-sm text-slate-500 dark:text-gray-400">Acceso:</p>
-                            <span class="block font-medium">PoF, HoT, EoD</span>
+                            <span class="block font-medium">{{ accountData.content_access }}</span>
                         </div>
                         <div>
                             <p class="text-sm text-slate-500 dark:text-gray-400">Comandante:</p>

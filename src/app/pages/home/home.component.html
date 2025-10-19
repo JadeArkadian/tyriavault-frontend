@@ -82,7 +82,7 @@
               placeholder="Pega tu clave de API aquí..."
               [ngClass]="{'border-red-500 dark:border-red-500': errorMessage}"
               class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-indigo-500 focus:border-indigo-500 transition duration-150">
-            
+
               @if (errorMessage) {
               <div class="text-red-600 dark:text-red-400 mt-2 text-sm"> {{ errorMessage }} </div>
               }
@@ -93,10 +93,8 @@
                   [disabled]="isLoading" [ngClass]="{'bg-gray-400 dark:bg-gray-600 cursor-not-allowed': isLoading }">
 
             @if (!isLoading) {
-            <ng-container>Acceder a mi Bóveda</ng-container>
-            }
-            @else {
-            <ng-template #loadingSpinner>
+              Acceder a mi Bóveda
+            } @else {
               <span class="flex items-center justify-center">
                 <svg class="animate-spin h-6 w-6 text-white mx-auto" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                   <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
@@ -104,7 +102,6 @@
                 </svg>
                 <span class="ml-2">Verificando...</span>
               </span>
-            </ng-template>
             }
           </button>
         </form>

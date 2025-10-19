@@ -17,6 +17,7 @@ export class MobileNavigationComponent {
   @Input() isMenuOpen!: boolean;
   @Input() isMobileAccountDropdownOpen!: boolean;
   @Input() currentPage!: string;
+  @Input() apiKeyValid!: boolean;
 
   // --- Outputs / Callbacks ---
   @Input() selectPage!: (pageId: string, path: string) => void;
