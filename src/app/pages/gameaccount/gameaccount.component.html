@@ -35,15 +35,15 @@
                         </div>
                         <div>
                             <p class="text-sm text-slate-500 dark:text-gray-400">Mundo (Servidor):</p>
-                            <span class="block font-medium">Tarnished Coast [NA]</span>
+                            <span class="block font-medium">{{ accountData.world_name | localizedText }}</span>
                         </div>
                         <div>
                             <p class="text-sm text-slate-500 dark:text-gray-400">Nivel de Fractal:</p>
-                            <span class="block font-medium">125</span>
+                            <span class="block font-medium">{{ accountData.fractal_level }}</span>
                         </div>
                         <div>
                             <p class="text-sm text-slate-500 dark:text-gray-400">Acceso:</p>
-                            <span class="block font-medium">PoF, HoT, EoD</span>
+                            <span class="block font-medium">{{ accountData.content_access }}</span>
                         </div>
                         <div>
                             <p class="text-sm text-slate-500 dark:text-gray-400">Comandante:</p>

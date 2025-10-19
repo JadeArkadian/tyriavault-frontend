@@ -4,10 +4,11 @@ import { StorageService } from '../../services/storage.service';
 import { finalize } from 'rxjs';
 import { AccountInfoResponse } from '../../interfaces/api-responses';
 import { DatePipe } from '@angular/common';
+import { LocalizedTextPipe } from "../../pipes/localized-text.pipe";
 
 @Component({
   selector: 'app-gameaccount',
-  imports: [DatePipe],
+  imports: [DatePipe, LocalizedTextPipe],
   standalone: true,
   templateUrl: './gameaccount.component.html',
   styleUrl: './gameaccount.component.css',
