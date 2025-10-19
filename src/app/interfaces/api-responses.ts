@@ -20,7 +20,7 @@ export interface AccountInfoResponse {
   account_name: string;
   creation_date: Date;
   fractal_level: number;
-  world_name: LocalizedTextResponse;
+  world_name: LocalizedText;
   content_access: string[];
   last_modified: Date;
 }
@@ -32,7 +32,7 @@ export interface AccountInfoResponse {
 /**
  * Interface representing a localized text comming from the API 
  */
-export interface LocalizedTextResponse{
+export interface LocalizedText {
   es: string;
   en: string;
   fr: string;
