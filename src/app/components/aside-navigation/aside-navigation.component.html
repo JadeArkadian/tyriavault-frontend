@@ -1,0 +1,19 @@
+<aside class="lg:w-64 lg:flex-shrink-0">
+    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-2 top-4">
+        <div class="flex items-center gap-4 pb-3 pt-2 mb-6 border-b border-slate-200 dark:border-gray-700">
+            <img class="w-12 h-12 rounded-full object-cover" src="https://render.guildwars2.com/file/32633AF8ADEA696A1EF56D3AE32D617B10D3AC57/157353.png" alt="User Avatar">
+            <span class="font-semibold text-lg">Cuenta</span>
+        </div>
+        <div class="space-y-2">
+            @for (item of navItems; track item) {
+                <button (click)="selectPage(item.id, item.path)" 
+                class="block px-4 py-2 rounded-md"
+                [class]="isCurrentPage(item.id)
+                        ? 'bg-indigo-50 dark:bg-indigo-900/50 text-indigo-600 dark:text-indigo-400 font-medium'
+                        : 'text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors'">
+                    {{ item.label | transloco }}
+                </button>
+            }
+        </div>
+    </div>
+</aside>

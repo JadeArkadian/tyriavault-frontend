@@ -17,5 +17,16 @@
     "characters": "TyriaVault - Characters",
     "tradingpost": "TyriaVault - Tradingpost",
     "analytics": "TyriaVault - Analytics"
+  },
+  "account": {
+    "navbar": {
+      "summary": "Summary",
+      "achievements": "Achievements",
+      "dyes": "Dyes",
+      "emotes": "Emotes",
+      "minis": "Minis",
+      "bank": "Bank",
+      "materials": "Materials"
+    }
   }
 }

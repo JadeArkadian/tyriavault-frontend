@@ -1,23 +1,8 @@
 <main class="p-4 md:p-8">
         <div class="max-w-7xl mx-auto flex flex-col lg:flex-row gap-8">
 
-            <aside class="lg:w-64 lg:flex-shrink-0">
-                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-2 top-4">
-                    <div class="flex items-center gap-4 pb-3 pt-2 mb-6 border-b border-slate-200 dark:border-gray-700">
-                        <img class="w-12 h-12 rounded-full object-cover" src="https://render.guildwars2.com/file/32633AF8ADEA696A1EF56D3AE32D617B10D3AC57/157353.png" alt="User Avatar">
-                        <span class="font-semibold text-lg">{{ accountData.account_name }}</span>
-                    </div>
-                    <nav class="space-y-2">
-                        <a href="#" class="block px-4 py-2 rounded-md bg-blue-500 text-white font-medium">Resumen</a>
-                        <a href="#" class="block px-4 py-2 rounded-md text-slate-500 dark:text-gray-400 hover:bg-slate-100 hover:text-slate-900 dark:hover:bg-gray-700 dark:hover:text-white transition-colors">Logros</a>
-                        <a href="#" class="block px-4 py-2 rounded-md text-slate-500 dark:text-gray-400 hover:bg-slate-100 hover:text-slate-900 dark:hover:bg-gray-700 dark:hover:text-white transition-colors">Tintes</a>
-                        <a href="#" class="block px-4 py-2 rounded-md text-slate-500 dark:text-gray-400 hover:bg-slate-100 hover:text-slate-900 dark:hover:bg-gray-700 dark:hover:text-white transition-colors">Emotes</a>
-                        <a href="#" class="block px-4 py-2 rounded-md text-slate-500 dark:text-gray-400 hover:bg-slate-100 hover:text-slate-900 dark:hover:bg-gray-700 dark:hover:text-white transition-colors">Miniaturas</a>
-                        <a href="#" class="block px-4 py-2 rounded-md text-slate-500 dark:text-gray-400 hover:bg-slate-100 hover:text-slate-900 dark:hover:bg-gray-700 dark:hover:text-white transition-colors">Banco</a>
-                        <a href="#" class="block px-4 py-2 rounded-md text-slate-500 dark:text-gray-400 hover:bg-slate-100 hover:text-slate-900 dark:hover:bg-gray-700 dark:hover:text-white transition-colors">Materiales</a>
-                    </nav>
-                </div>
-            </aside>
+            <!-- Aside Navigation -->
+            <app-aside-navigation></app-aside-navigation>
 
             <section class="flex-1">
                 <h1 class="text-3xl font-bold mb-8">Resumen de la Cuenta</h1>

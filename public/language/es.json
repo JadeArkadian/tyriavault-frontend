@@ -17,5 +17,16 @@
     "characters": "TyriaVault - Personajes",
     "tradingpost": "TyriaVault - Bazaar",
     "analytics": "TyriaVault - Estadísticas"
+  },
+  "account": {
+    "navbar": {
+      "summary": "Resumen",
+      "achievements": "Logros",
+      "dyes": "Tintes",
+      "emotes": "Emotes",
+      "minis": "Miniaturas",
+      "bank": "Banco",
+      "materials": "Materiales"
+    }
   }
 }

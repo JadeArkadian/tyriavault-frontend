@@ -6,10 +6,11 @@ import { AccountInfoResponse } from '../../interfaces/api-responses';
 import { DatePipe } from '@angular/common';
 import { LocalizedTextPipe } from '../../pipes/localized-text.pipe';
 import { TranslocoService } from '@jsverse/transloco';
+import { AsideNavigationComponent } from "../../components/aside-navigation/aside-navigation.component";
 
 @Component({
   selector: 'app-gameaccount',
-  imports: [DatePipe, LocalizedTextPipe],
+  imports: [DatePipe, LocalizedTextPipe, AsideNavigationComponent],
   standalone: true,
   templateUrl: './gameaccount.component.html',
   styleUrl: './gameaccount.component.css',

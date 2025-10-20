@@ -5,5 +5,28 @@
     "characters": "Characters",
     "tradingpost": "Tradingpost",
     "analytics": "Analytics"
+  },
+  "footer": {
+    "licensedby": "This project is licensed under the",
+    "mit":"MIT license",
+    "codedby":"Coded by Jade Arkadian."
+  },
+  "titles": {
+    "home": "TyriaVault - Home",
+    "account": "TyriaVault - Account",
+    "characters": "TyriaVault - Characters",
+    "tradingpost": "TyriaVault - Tradingpost",
+    "analytics": "TyriaVault - Analytics"
+  },
+  "account": {
+    "navbar": {
+      "summary": "Summary",
+      "achievements": "Achievements",
+      "dyes": "Dyes",
+      "emotes": "Emotes",
+      "minis": "Minis",
+      "bank": "Bank",
+      "materials": "Materials"
+    }
   }
 }
